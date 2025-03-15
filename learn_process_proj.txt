@@ -2,4 +2,32 @@ STEP1:first make ui from bolt.new for prompt use chat gpt and put that prompt in
 
 STEP2: After that add signup and login page using clerk for that only required file to chat gpt like here app.tsx,main.tsx,header.tsx .But make your own Custom Sign-up componenet in clerk
 
-STEP3:
+STEP3:  Imagine you built a toy car to play with at home. It's great for practicing and testing ideas, but it's not built to handle a busy road or carry many passengers safely. Flask’s built-in server is like that toy car—perfect for development (testing and building your app) but not strong or secure enough for a busy real-world road (a production environment).
+
+Simple Example
+Development Server (Flask’s built-in server):
+When you run your app with python app.py, Flask starts a simple server that reloads automatically when you change your code. This is great for testing on your computer but it's not built to handle heavy traffic or secure data if many people use it.
+
+Production Server (e.g., Gunicorn):
+When you're ready to share your app with lots of people, you use a production server like Gunicorn. For example, after installing Gunicorn (pip install gunicorn), you can start your app by running:
+
+bash
+Copy
+Edit
+gunicorn app:app
+This tells Gunicorn to use the Flask app defined in app.py (where app is the name of your Flask application). Gunicorn is designed to handle many users and provide better security and performance.
+
+In Short
+Flask Built-in Server:
+
+Good for testing and development.
+Not secure or fast enough for many users.
+Production Server (e.g., Gunicorn):
+
+Designed to handle lots of traffic.
+More secure and reliable for a live website.
+
+
+
+
+STEP4:  
