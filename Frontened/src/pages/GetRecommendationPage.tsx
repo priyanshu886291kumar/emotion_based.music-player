@@ -35,39 +35,61 @@ function GetRecommendationPage() {
         </p>
       </header>
       <div className="flex flex-col md:flex-row w-full max-w-4xl bg-gray-800 rounded-lg shadow-lg overflow-hidden">
-        {/* Emotion Detection Area */}
-        <div className="flex-1 p-8 flex flex-col justify-center items-center border-r border-gray-700">
-          <h2 className="text-3xl font-semibold mb-4">Emotion Detection Area</h2>
-          <p className="text-gray-400 text-center">
-            Click the button below to activate your camera, let our system analyze your face,
-            and detect your dominant emotion.
-          </p>
-          <button 
-            className="mt-6 px-4 py-2 bg-green-600 rounded hover:bg-green-700 transition"
-            onClick={handleDetectEmotion}
-            disabled={loading}
-          >
-            {loading ? "Detecting..." : "Detect Emotion"}
-          </button>
-          {error && <p className="text-red-400 mt-2">{error}</p>}
-          <p className="text-sm text-gray-500 mt-4">
-            The camera will be activated for 3 seconds to capture your emotion.
-          </p>
-        </div>
-        {/* Display Detected Emotion */}
-        <div className="w-full md:w-1/3 p-8 flex flex-col justify-center items-center">
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-orange-500 rounded-lg p-6 w-full text-center"
-          >
-            <h3 className="text-2xl font-bold mb-2">Your Emotion</h3>
-            <p className="text-xl">{emotion}</p>
-            <p className="mt-4 text-sm text-gray-100">
-              Based on your current vibe, we recommend tunes that match your mood!
-            </p>
-          </motion.div>
-        </div>
+
+
+{/* Emotion Detection Area */}
+<div className="flex-1 p-8 flex flex-col justify-center items-center border-r border-gray-700">
+  <motion.div
+    initial={{ opacity: 0, y: -20 }}
+    animate={{ opacity: 1, y: 0 }}
+    className="w-full bg-gradient-to-r from-purple-700 to-pink-500 p-8 rounded-lg shadow-2xl"
+  >
+    <h2 className="text-3xl font-semibold mb-4 text-white drop-shadow-lg">
+      Emotion Detection Area
+    </h2>
+    <p className="text-lg text-gray-100 text-center mb-6">
+      Click the button below to activate your camera, let our system analyze your face,
+      and detect your dominant emotion.
+    </p>
+    <motion.button 
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.95 }}
+      className="mt-6 px-6 py-3 bg-green-600 rounded-full hover:bg-green-700 transition duration-300 ease-in-out text-lg font-semibold shadow-lg"
+      onClick={handleDetectEmotion}
+      disabled={loading}
+    >
+      {loading ? "Detecting..." : "Detect Emotion"}
+    </motion.button>
+    {error && <p className="text-red-400 mt-2 font-medium">{error}</p>}
+    <p className="text-sm text-gray-300 mt-4">
+      The camera will be activated for 3 seconds to capture your emotion.
+    </p>
+  </motion.div>
+</div>
+
+
+{/* Display Detected Emotion */}
+<div className="w-full md:w-1/3 p-8 flex flex-col justify-center items-center">
+  <motion.div
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+    className="bg-gradient-to-r from-pink-500 to-orange-500 rounded-lg p-8 w-full text-center shadow-2xl"
+  >
+    <h3 className="text-3xl font-bold mb-4 text-white drop-shadow-lg">
+      Your Emotion
+    </h3>
+    <p className="text-xl mb-4 text-white">
+      Your emotion is{" "}
+      <span className="mx-2 inline-block px-4 py-2 bg-white text-indigo-600 font-bold rounded-md border-2 border-indigo-400">
+        {emotion}
+      </span>
+    </p>
+    <p className="mt-4 text-lg text-white">
+      Based on your current vibe, we recommend tunes that match your mood perfectly!
+    </p>
+  </motion.div>
+</div>
+        
       </div>
       <div className="mt-8">
         <Link to="/" className="text-orange-400 hover:underline">
