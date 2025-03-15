@@ -1,0 +1,5 @@
+STEP1:first make ui from bolt.new for prompt use chat gpt and put that prompt in bolt.new if you want in react write in prompt use react instead of typescript
+
+STEP2: After that add signup and login page using clerk for that only required file to chat gpt like here app.tsx,main.tsx,header.tsx .But make your own Custom Sign-up componenet in clerk
+
+STEP3:
