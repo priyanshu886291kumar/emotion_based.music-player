@@ -1,0 +1,38 @@
+TASK1:-. Advanced Caching Options
+If you need a more robust solution or plan to scale up, consider these options:
+
+Cache Libraries:
+Use a caching library like cachetools which provides a TTL (Time-To-Live) cache.
+Example with cachetools:
+
+CODE_PART:
+from cachetools import TTLCache
+cache = TTLCache(maxsize=1, ttl=3600)  # Cache size 1, TTL 1 hour
+
+
+def get_spotify_token():
+    if 'token' in cache:
+        return cache['token']
+    # Else, request token, then:
+    token = ...  # same token request code
+    cache['token'] = token
+    return token
+
+
+Distributed Cache:
+For a production application, consider using a distributed caching solution like Redis, especially if your backend is running on multiple servers.
+
+Background Scheduler:
+If you expect high traffic, you could set up a background scheduler (e.g., with APScheduler(read from coderslegacy youtube channel)) to refresh the token periodically rather than on demand.
+
+
+Summary(THERE ARE THREE WAY FOR TOKEN SYSTEM TO HANDLE)
+In-Memory Caching:
+Use global variables to store the token and its expiry time, checking the validity before making new requests.
+Expiration Check:
+Compare the current time with the expiry time and refresh the token if needed.
+Advanced Options:
+Consider cache libraries, distributed caches, or background schedulers for a production-level solution.
+
+
+TASK2:-

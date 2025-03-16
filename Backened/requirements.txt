@@ -2,3 +2,6 @@ Flask
 flask-cors
 opencv-python
 deepface
+requests
+numpy
+python-dotenv

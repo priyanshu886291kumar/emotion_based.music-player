@@ -48,17 +48,72 @@
 
 
 
+# from flask import Flask, jsonify, request
+# from flask_cors import CORS
+# import cv2
+# import time
+# from deepface import DeepFace
+# import base64
+# import numpy as np
+
+# app = Flask(__name__)
+# CORS(app)  # Allow cross-origin requests from your frontend
+
+# @app.route('/api/emotion', methods=['POST'])
+# def get_emotion():
+#     try:
+#         data = request.get_json()
+#         if not data or 'image' not in data:
+#             return jsonify({'error': 'No image provided'}), 400
+
+#         image_data = data['image']
+
+#         # If the base64 string includes the data URL prefix, remove it
+#         if image_data.startswith('data:image'):
+#             _, encoded = image_data.split(',', 1)
+#         else:
+#             encoded = image_data
+
+#         # Decode the base64 image
+#         decoded = base64.b64decode(encoded)
+#         np_arr = np.frombuffer(decoded, np.uint8)
+#         frame = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+#         if frame is None:
+#             return jsonify({'error': 'Failed to decode image'}), 400
+
+#         # Analyze the captured frame for emotion using DeepFace
+#         result = DeepFace.analyze(frame, actions=['emotion'], enforce_detection=False)
+
+#         # DeepFace may return a list; if so, take the first result
+#         if isinstance(result, list):
+#             result = result[0]
+
+#         dominant_emotion = result.get('dominant_emotion', 'Unknown')
+#         return jsonify({'emotion': dominant_emotion})
+
+#     except Exception as e:
+#         return jsonify({'error': str(e)}), 500
+
+# if __name__ == '__main__':
+#     app.run(debug=True, port=5000)
+
+
+
+# after adding spotify part updated code
+
+
+# app.py
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import cv2
 import time
 from deepface import DeepFace
-import base64
-import numpy as np
+from spotify_service import get_recommendations_by_emotion
 
 app = Flask(__name__)
-CORS(app)  # Allow cross-origin requests from your frontend
+CORS(app)
 
+# Existing endpoint for emotion detection
 @app.route('/api/emotion', methods=['POST'])
 def get_emotion():
     try:
@@ -67,32 +122,35 @@ def get_emotion():
             return jsonify({'error': 'No image provided'}), 400
 
         image_data = data['image']
-
-        # If the base64 string includes the data URL prefix, remove it
         if image_data.startswith('data:image'):
             _, encoded = image_data.split(',', 1)
         else:
             encoded = image_data
 
-        # Decode the base64 image
+        import base64, numpy as np
         decoded = base64.b64decode(encoded)
         np_arr = np.frombuffer(decoded, np.uint8)
         frame = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
         if frame is None:
             return jsonify({'error': 'Failed to decode image'}), 400
 
-        # Analyze the captured frame for emotion using DeepFace
         result = DeepFace.analyze(frame, actions=['emotion'], enforce_detection=False)
-
-        # DeepFace may return a list; if so, take the first result
         if isinstance(result, list):
             result = result[0]
-
         dominant_emotion = result.get('dominant_emotion', 'Unknown')
         return jsonify({'emotion': dominant_emotion})
-
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+# New endpoint for Spotify recommendations
+@app.route('/api/recommendations', methods=['GET'])
+def recommendations():
+    emotion = request.args.get("emotion", "neutral")
+    try:
+        recommendations = get_recommendations_by_emotion(emotion)
+        return jsonify({"tracks": recommendations})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
