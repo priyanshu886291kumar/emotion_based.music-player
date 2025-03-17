@@ -176,9 +176,12 @@ function GetRecommendationPage() {
           navigate("/recommendations", { state: { emotion: data.emotion } });
         }, 2000);
       } else {
+        console.log(data.error);
         setError(data.error || "Error detecting emotion");
       }
     } catch (err) {
+      console.log(err);
+      
       setError("Error connecting to emotion detection server");
     }
     setLoading(false);

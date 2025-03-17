@@ -113,6 +113,19 @@ from spotify_service import get_recommendations_by_emotion
 app = Flask(__name__)
 CORS(app)
 
+@app.route('/test', methods=['GET'])
+def test_endpoint():
+    try:
+        # Return a simple JSON response indicating success.
+        return jsonify({
+            "message": "Test endpoint is working!",
+            "status": "success"
+        }), 200
+    except Exception as e:
+        # If any error occurs, return an error JSON response.
+        return jsonify({"error": str(e)}), 500
+
+
 # Existing endpoint for emotion detection
 @app.route('/api/emotion', methods=['POST'])
 def get_emotion():
@@ -146,10 +159,12 @@ def get_emotion():
 @app.route('/api/recommendations', methods=['GET'])
 def recommendations():
     emotion = request.args.get("emotion", "neutral")
+    print(emotion)
     try:
         recommendations = get_recommendations_by_emotion(emotion)
         return jsonify({"tracks": recommendations})
     except Exception as e:
+        print(e)
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':

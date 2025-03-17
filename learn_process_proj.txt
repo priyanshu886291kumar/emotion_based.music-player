@@ -29,7 +29,6 @@ More secure and reliable for a live website.
 
 
 
-
 STEP4:  $ python -m venv venv
 $ source venv/Scripts/activate
 $ pip show python-dotenv
@@ -42,4 +41,12 @@ STEP5: go in root folder
  git push origin master
 git status to show what changes happen in any happy
 
-STEP5: 
+
+
+STEP6:  docker run --name my-redis -p 6379:6379 -d redis
+ this command first search for image in docker hub if not created it create by pull and then it all create container whose name is my-redis this is good command automatically doing all TASK1
+
+
+
+STEP7:  docker ps
+This command lists all running containers, and you should see your "my-redis" container there.

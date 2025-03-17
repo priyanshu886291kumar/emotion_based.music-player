@@ -30,6 +30,8 @@ function RecommendationsPage() {
         if (response.ok) {
           setTracks(data.tracks);
         } else {
+          console.log(data.error);
+          
           setError(data.error || "Error fetching recommendations");
         }
       } catch (err) {
