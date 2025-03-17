@@ -4,3 +4,5 @@ learn_process_proj.txt
 
 node_modules
 __pycache__
+
+.env
