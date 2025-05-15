@@ -24,3 +24,8 @@ dist-ssr
 *.sw?
 
 *storybook.log
+
+.bolt
+cypress
+__mocks__
+.env

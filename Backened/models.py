@@ -12,6 +12,13 @@ class User(db.Model):
     email = db.Column(db.String(128), unique=True)
     favoriteGenre = db.Column(db.String(64))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    # Subscription fields
+    subscription_end_date = db.Column(db.DateTime, nullable=True)
+    is_premium = db.Column(db.Boolean, default=False)
+    balance = db.Column(db.Float, default=10000.0)
+    subscription_plan = db.Column(db.String(64), nullable=True)  # New column for subscription plan
+
     # Relationships
     emotions = db.relationship("EmotionHistory", backref="user", lazy=True)
     favorites = db.relationship("FavoriteTrack", backref="user", lazy=True)
@@ -20,6 +27,7 @@ class User(db.Model):
     likes = db.relationship("Like", backref="user", lazy=True)
     dislikes = db.relationship("Dislike", backref="user", lazy=True)
     saves = db.relationship("Save", backref="user", lazy=True)
+
 
 class EmotionHistory(db.Model):
     __tablename__ = 'emotion_history'

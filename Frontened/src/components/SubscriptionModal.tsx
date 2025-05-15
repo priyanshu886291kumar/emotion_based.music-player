@@ -1,6 +1,9 @@
-import React from 'react';
+
+
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Check, Crown } from 'lucide-react';
+// import PaymentForm from './PaymentForm'; // 🆕 Import PaymentForm
 
 interface SubscriptionModalProps {
   isOpen: boolean;
@@ -44,6 +47,8 @@ const plans = [
 ];
 
 const SubscriptionModal: React.FC<SubscriptionModalProps> = ({ isOpen, onClose }) => {
+  const [selectedPlan, setSelectedPlan] = useState<string | null>(null); // 🆕 Track selected plan
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -106,6 +111,7 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({ isOpen, onClose }
                     </ul>
 
                     <button
+                      onClick={() => setSelectedPlan(plan.name)} // 🆕 Set selected plan
                       className={`w-full py-3 rounded-lg font-medium transition-colors duration-300 ${
                         plan.popular
                           ? 'bg-orange-500 text-white hover:bg-orange-600'
@@ -117,6 +123,17 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({ isOpen, onClose }
                   </motion.div>
                 ))}
               </div>
+
+              {/* 🆕 Show PaymentForm when a plan is selected */}
+              {/* {selectedPlan && (
+                <PaymentForm
+                  userId="test-user-123"
+                  plan={selectedPlan}
+                  price={plans.find((p) => p.name === selectedPlan)?.price || ''}
+                  onPaymentSuccess={onClose} // Close modal on success
+                />
+              )} */}
+
             </div>
           </motion.div>
         </motion.div>

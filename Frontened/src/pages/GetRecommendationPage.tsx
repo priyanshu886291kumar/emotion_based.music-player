@@ -11,18 +11,22 @@
 //   const [cameraOn, setCameraOn] = useState(false);
 //   const navigate = useNavigate();
 
-//   const startCamera = async () => {
-//     setError("");
-//     try {
-//       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-//       if (videoRef.current) {
-//         videoRef.current.srcObject = stream;
-//       }
-//       setCameraOn(true);
-//     } catch (err: any) {
-//       setError("Could not access camera. Please allow permissions in your browser settings.");
-//     }
-//   };
+
+
+  // const startCamera = async () => {
+  //   setError("");
+  //   try {
+  //     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+  //     if (videoRef.current) {
+  //       videoRef.current.srcObject = stream;
+  //     }
+  //     setCameraOn(true);
+  //   } catch (err: any) {
+  //     setError("Could not access camera. Please allow permissions in your browser settings.");
+  //   }
+  // };
+
+
 
 //   const stopCamera = () => {
 //     if (videoRef.current && videoRef.current.srcObject) {
@@ -194,6 +198,8 @@ import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import Loader from "../components/Loader"; // Using Loader component
 
+
+
 function GetRecommendationPage() {
   const [emotion, setEmotion] = useState("Neutral");
   const [loading, setLoading] = useState(false);
@@ -202,40 +208,27 @@ function GetRecommendationPage() {
   const [cameraOn, setCameraOn] = useState(false);
   const navigate = useNavigate();
 
+
+
+
   const startCamera = async () => {
     setError("");
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
+  
+        // ✅ Add this to ensure playback starts
+        await videoRef.current.play().catch((err) => {
+          console.warn("Play interrupted:", err);
+        });
       }
       setCameraOn(true);
     } catch (err: any) {
       setError("Could not access camera. Please allow permissions in your browser settings.");
     }
   };
-
-  // const startCamera = async () => {
-  //   setError(""); // Clear any previous errors
-  //   try {
-  //     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-  //     if (videoRef.current) {
-  //       videoRef.current.srcObject = stream;
-  //     }
-  //     setCameraOn(true);
-  //   } catch (err: any) {
-  //     console.error("Error accessing the camera:", err);
-  //     if (err.name === "NotAllowedError") {
-  //       setError("Camera access was denied. Please allow permissions in your browser settings.");
-  //     } else if (err.name === "NotFoundError") {
-  //       setError("No camera was found on this device. Please connect a camera and try again.");
-  //     } else if (err.name === "NotReadableError") {
-  //       setError("The camera is already in use by another application. Please close other applications and try again.");
-  //     } else {
-  //       setError("Could not access camera. Please check your settings.");
-  //     }
-  //   }
-  // };
+  
 
   const stopCamera = () => {
     if (videoRef.current && videoRef.current.srcObject) {
@@ -384,3 +377,8 @@ function GetRecommendationPage() {
 }
 
 export default GetRecommendationPage;
+
+
+
+
+

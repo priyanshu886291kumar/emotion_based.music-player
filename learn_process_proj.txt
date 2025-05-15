@@ -17,6 +17,8 @@ Edit
 gunicorn app:app
 This tells Gunicorn to use the Flask app defined in app.py (where app is the name of your Flask application). Gunicorn is designed to handle many users and provide better security and performance.
 
+
+
 In Short
 Flask Built-in Server:
 
@@ -54,8 +56,10 @@ This command lists all running containers, and you should see your "my-redis" co
 STEP8: docker-compose up --build -d
     docker-compose down
 
+
 STEP9: To create image 
  docker build -t (write name of image) 
+
 
 STEP10: To remove image
  docker image rm  (image name)
@@ -99,3 +103,54 @@ STEP13: psql -U postgres -h localhost -p 5433 -d music_app
  /d likes
  INSERT INTO likes (user_id, track_name, artist, spotify_url, created_at)
 VALUES (12, 'Alchemy', 'Bandish Projekt', 'https://open.spotify.com/track/4gUXpcb2lbDe7a0FNaPUJq', NOW());
+
+
+STEP14: AFTER REFRESHING SONG STILL SHOW 
+When the Page Loads or Refreshes:
+
+The frontend sends a request to the backend for each song that is displayed on the page (e.g., recommended songs).
+For each song, the request includes:
+user_id: To identify the user.
+track_name: To identify the specific song.
+Backend Checks the likes Table:
+
+The backend looks in the likes table to see if there is a row where:
+user_id matches the current user.
+track_name matches the song being checked.
+If a matching row is found, it means the song is liked.
+Backend Responds to the Frontend:
+
+The backend sends a response for each song, indicating whether it is liked or disliked.
+Example Response:
+
+Frontend Updates the UI:
+
+Based on the backend's response:
+If liked: true, the "Like" button for that song is shown in green.
+If disliked: true, the "Dislike" button for that song is shown in yellow.
+
+
+STEP15:flask db migrate -m "Add balance column to User model"
+flask db upgrade
+
+STEP16:YYYY-MM-DD HH:MM:SS
+
+
+STEP16:White-Box Testing
+Focuses on internal logic and database operations.
+Tests for:
+Missing fields.
+Invalid input formats.
+Edge cases like insufficient balance.
+Successful operations (e.g., subscription updates, user creation).
+Black-Box Testing
+Focuses on endpoint responses and user-facing functionality.
+Tests for:
+Correct HTTP status codes.
+Valid JSON responses.
+Functional behavior of endpoints (e.g., toggling likes/dislikes, fetching recommendations).
+
+run in backend in venv see Below
+(venv)
+Lenovo@DESKTOP-RKKGBPL MINGW64 /d/previous_pull/Software-Project/Backened (master)
+$ pytest tests/test_white_box.py

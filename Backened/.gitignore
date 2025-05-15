@@ -3,3 +3,7 @@ node_modules
 __pycache__
 
 .env
+migrations
+ResNet50V2_Model_Checkpoint
+emotion_detector
+requriements.txt
