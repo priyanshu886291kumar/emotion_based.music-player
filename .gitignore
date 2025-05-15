@@ -8,3 +8,4 @@ __pycache__
 .env
 ass6_ass7_leftpart.txt
 future_work.txt
+*.txt
